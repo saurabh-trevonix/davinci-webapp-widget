@@ -1,0 +1,98 @@
+body{
+  margin:0;
+  letter-spacing: .2px;
+  font-family: "RNHouseSansRegular",sans-serif;
+}
+
+button{
+    color: #ffffff;
+    background-color: #5e10b1;
+    border: none;
+    text-align: center;
+    height: 100%;
+    margin: 0 20px 0 20px;
+    cursor:pointer;
+    text-decoration:none;
+}
+
+.underline {
+  display: inline-block;
+  padding-bottom:1px;
+  background-image: linear-gradient(#ffffff 0 0);
+  background-position: 0 100%; /*OR bottom left*/
+  background-size: 0% 2px;
+  background-repeat: no-repeat;
+  transition:
+    background-size 0.3s,
+    background-position 0s 0.3s; /*change after the size immediately*/
+}
+
+.underline:hover {
+  background-position: 100% 100%; /*OR bottom right*/
+  background-size: 100% 2px;
+}
+
+#navigation{
+  background-color: #5e10b1;
+    color: #ffffff;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    padding:10px;
+}
+
+.login{
+    color: #ffffff;
+    text-decoration: none;
+    letter-spacing: .16px;
+    padding: 6px 20px 6px 42px;
+    cursor: pointer;
+    display: inline-block;
+    background: transparent url(https://www.natwest.com/etc.clientlibs/responsive/components/foundation/iagloballogin/clientlibs/clientlib_ia_global_login_champion/resources/images/Login-white.svg) no-repeat 13px;
+    height: 100%;
+    outline: 1px solid #be99e6;
+    line-height: 20px;
+    border-radius: 16px;
+}
+.login:hover{
+   outline: 1px solid #ffffff;
+}
+
+#navigation2{
+  background-color: #5a287d;
+    color: #ffffff;
+    height: 50px;
+    padding:10px;
+    height:600px;
+}
+
+.button_nav2{
+    color: #ffffff;
+    background-color: #5a287d;
+    border: none;
+    text-align: center;
+    height: 100%;
+    margin: 0 20px 0 20px;
+    cursor:pointer;
+    text-decoration:none;
+}
+
+dialog[open] {
+	width: 20em;
+	background: #FBFBFC;
+	border: 2px solid #5a287d;
+  border-radius:10px;
+	margin: 1.5em auto;
+}
+
+dialog::backdrop {
+	background: hsl(240 14% 99%/.5);
+}
+
+
+/*PingOne stuff*/
+.companyLogo {
+    /* Ping Logo  */
+    content: url("https://www.natwest.com/content/dam/championlogos/Natwest_Secondary_Horizontal_RGB_NEG.svg");
+    height: 60px;
+}

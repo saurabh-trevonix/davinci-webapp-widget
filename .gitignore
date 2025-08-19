@@ -1,0 +1,19 @@
+# Exclude the existing git folder
+git/
+
+# Exclude system files
+.DS_Store
+Thumbs.db
+
+# Exclude IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Exclude log files
+*.log
+
+# Exclude temporary files
+*.tmp
+*.temp

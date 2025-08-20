@@ -35,13 +35,14 @@ function openDialog(pol){
 
 function loadDV(polId){
   const tokenURL = "https://orchestrate-api.pingone.eu";
-  const flowURL = "https://auth.pingone.eu/";
   const companyId = "fd4cecf9-f6b6-45da-a0c3-2f8af9874182";
   const policyId = polId;
   const apiKey =
     "1d7ceddc35cd195e6abe59ae58c8f5184994caae4499fe77a0f422a775a9d175e4c4e79653024a92b339091b7a5dcb48e5d2a39d802fd77a4649ec4150d99678145211a384ff69de17852ca77adb921e883275af0d194fb722b7cc8e6e63ce4e052d8c1931420d9c01205f789427489df527af412409a75251de3e34585203e7";
 
   let flowInputVariables = {};
+
+  const oidcConfigUrl = "https://auth.pingone.eu/fd4cecf9-f6b6-45da-a0c3-2f8af9874182/as/.well-known/openid-configuration";
 
   /*** Build the DaVinci Token URL. ***/
   const skGetTokenUrl =
@@ -57,15 +58,18 @@ function loadDV(polId){
     redirect: "follow",
   };
   
-  /*** Retrieve DaVinci Token ***/
-  fetch(skGetTokenUrl, requestOptions)
-    .then((response) => response.json())
-    .then((responseData) => {
+  /*** Retrieve DaVinci Token and OIDC Config ***/
+  Promise.all([
+    fetch(skGetTokenUrl, requestOptions),
+    fetch(oidcConfigUrl)
+  ])
+    .then(([tokenResponse, oidcResponse]) => Promise.all([tokenResponse.json(), oidcResponse.json()]))
+    .then(([tokenData, oidcConfig]) => {
       var props = {
         config: {
           method: "runFlow",
-          apiRoot: flowURL,
-          accessToken: responseData.access_token,
+          apiRoot: oidcConfig.authorization_endpoint.replace('/authorize', ''),
+          accessToken: tokenData.access_token,
           companyId: companyId,
           policyId: policyId,
           parameters: flowInputVariables,
@@ -121,7 +125,7 @@ function logout(){
   
   let callback = encodeURI(window.location.href);
   
-  let uri = "https://auth.pingone.eu/6fa1cf7d-3008-4baa-a835-b8ced178e984/as/signoff?post_logout_redirect_uri="+callback;
+  let uri = "https://auth.pingone.eu/fd4cecf9-f6b6-45da-a0c3-2f8af9874182/as/signoff?post_logout_redirect_uri="+callback;
   window.location.href = uri;
 
 }

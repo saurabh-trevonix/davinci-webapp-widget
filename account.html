@@ -3,7 +3,7 @@
   <head>
     <!-- 
       This is an HTML comment
-      You can write text in a comment and the content won't be visible in the page
+      You can write text in a comment and the content won't be visible in a page
     -->
 
     <meta charset="utf-8" />
@@ -29,6 +29,263 @@
     <script
       type="text/javascript"
       src="https://assets.pingone.com/davinci/latest/davinci.js"></script>
+    <script type="text/javascript" src="script.js"></script>
+    <style>
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f5f7fa;
+      }
+
+      .header {
+        background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+        color: white;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+
+      .nav-buttons {
+        display: flex;
+        gap: 15px;
+      }
+
+      .nav-button {
+        background: rgba(255,255,255,0.2);
+        border: 1px solid rgba(255,255,255,0.3);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 20px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+
+      .nav-button:hover {
+        background: rgba(255,255,255,0.3);
+        transform: translateY(-2px);
+      }
+
+      .content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      .content h1 {
+        color: #6c5ce7;
+        text-align: center;
+        margin-bottom: 2rem;
+        font-size: 2.5rem;
+        font-weight: 300;
+      }
+
+      /* User Profile Card */
+      .user-profile-card {
+        background: white;
+        border-radius: 15px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        border: 1px solid #e9ecef;
+      }
+
+      .profile-header {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+      }
+
+      .profile-avatar {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 2rem;
+        font-weight: bold;
+        text-transform: uppercase;
+      }
+
+      .profile-info h2 {
+        margin: 0 0 0.5rem 0;
+        color: #2d3436;
+        font-size: 1.8rem;
+      }
+
+      .profile-info p {
+        margin: 0.25rem 0;
+        color: #636e72;
+      }
+
+      .status-badge {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 500;
+      }
+
+      .status-badge.authenticated {
+        background-color: #00b894;
+        color: white;
+      }
+
+      /* NatWest ID Section */
+      .natwest-id-section {
+        background: white;
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        border: 1px solid #e9ecef;
+      }
+
+      .natwest-id-section h3 {
+        color: #6c5ce7;
+        margin: 0 0 1.5rem 0;
+        font-size: 1.5rem;
+        border-bottom: 2px solid #f1f3f4;
+        padding-bottom: 0.5rem;
+      }
+
+      .info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+      }
+
+      .info-card {
+        background: #f8f9fa;
+        border-radius: 10px;
+        padding: 1.5rem;
+        border-left: 4px solid #6c5ce7;
+        transition: all 0.3s ease;
+      }
+
+      .info-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(108, 92, 231, 0.1);
+      }
+
+      .info-label {
+        font-size: 0.9rem;
+        color: #636e72;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 0.5rem;
+      }
+
+      .info-value {
+        font-size: 1.1rem;
+        color: #2d3436;
+        font-weight: 500;
+        word-break: break-word;
+      }
+
+      .info-value:empty::after {
+        content: "Not provided";
+        color: #b2bec3;
+        font-style: italic;
+      }
+
+      /* Token Debug Section */
+      .token-debug-section {
+        margin-top: 3rem;
+        padding: 2rem;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        border: 1px solid #e9ecef;
+      }
+
+      .token-debug-section h3 {
+        color: #6c5ce7;
+        margin-bottom: 1rem;
+      }
+
+      #toggle-tokens {
+        background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
+      }
+
+      #toggle-tokens:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(108, 92, 231, 0.4);
+      }
+
+      #token-section {
+        margin-top: 1.5rem;
+      }
+
+      #token-section h4 {
+        color: #2d3436;
+        margin-bottom: 0.75rem;
+        font-size: 1.1rem;
+      }
+
+      #access-token-display,
+      #id-token-display {
+        background-color: #f8f9fa;
+        border: 1px solid #e9ecef;
+        border-radius: 8px;
+        padding: 1rem;
+        overflow-x: auto;
+        font-family: 'Courier New', monospace;
+        font-size: 12px;
+        color: #495057;
+        max-height: 200px;
+        overflow-y: auto;
+        line-height: 1.4;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .content {
+          padding: 1rem;
+        }
+        
+        .profile-header {
+          flex-direction: column;
+          text-align: center;
+        }
+        
+        .info-grid {
+          grid-template-columns: 1fr;
+        }
+        
+        .header {
+          padding: 1rem;
+        }
+        
+        .nav-buttons {
+          flex-direction: column;
+          gap: 10px;
+        }
+      }
+    </style>
   </head>
   <body>
     <div id="header">
@@ -48,7 +305,7 @@
                 srcset="
                   https://cdn.glitch.global/135f0b77-1383-4b56-a33b-17c73c8a0614/n-w-logo.svg?v=1712907217271
                 "
-                src="https://cdn.glitch.global/135f0b77-1383-4b56-a33b-17c73c8a0614/logo.png?v=1712907221334"
+                src="https://cdn.glitch.global/135f0b77-1383-4b56-a33f0b77-1383-4b56-a33b-17c73c8a0614/logo.png?v=1712907221334"
                 alt="NatWest Logo - Back to home page "
                 style="border-width: 0px"
             /></a>
@@ -114,7 +371,18 @@
               <li class="last"></li>
             </ul>
 
-            <div id="ctl00_header_ctl00_loginWrapper" class="loginWrapper">
+            <!-- User Authentication Section -->
+            <div id="auth" style="display:flex;align-items:center;">
+              <div id="name" style="padding-right:20px;display:none;">
+                Hello [User Name]
+              </div>
+              <div>
+                <button id="login" class="login" onclick="openDialog('d350607149807ef20549a7183540b7a9')">Login</button>
+                <button id="logout" class="login" onclick="logout()" style="display:none;">Logout</button>
+              </div>
+            </div>
+
+            <div id="ctl00_header_ctl00_loginWrapper" class="loginWrapper" style="display: none;">
               <div id="ctl00_header_ctl00_loginSpan" class="loginLink">
                 <a
                   id="ctl00_header_ctl00_HDRNLAAnchor"
@@ -160,7 +428,368 @@
       </div>
     </div>
     <div id="content" class="li5MainContent">
-      Hello world!
+      <div class="content">
+        <h1>Welcome to Your Account</h1>
+        
+        <!-- User Profile Card -->
+        <div class="user-profile-card">
+          <div class="profile-header">
+            <div class="profile-avatar">
+              <span id="profile-initials">U</span>
+            </div>
+            <div class="profile-info">
+              <h2 id="user-full-name">Loading...</h2>
+              <p id="user-id">User ID: Loading...</p>
+              <p id="auth-status" class="status-badge authenticated">✓ Authenticated</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- NatWest ID Information -->
+        <div class="natwest-id-section">
+          <h3>NatWest ID Information</h3>
+          <div class="info-grid">
+            <div class="info-card">
+              <div class="info-label">First Name</div>
+              <div class="info-value" id="first-name">-</div>
+            </div>
+            <div class="info-card">
+              <div class="info-label">Last Name</div>
+              <div class="info-value" id="last-name">-</div>
+            </div>
+            <div class="info-card">
+              <div class="info-label">User ID</div>
+              <div class="info-value" id="user-id-display">-</div>
+            </div>
+            <div class="info-card">
+              <div class="info-label">Issued By</div>
+              <div class="info-value" id="issued-by">-</div>
+            </div>
+            <div class="info-card">
+              <div class="info-label">Issued Date</div>
+              <div class="info-value" id="issued-date">-</div>
+            </div>
+            <div class="info-card">
+              <div class="info-label">City</div>
+              <div class="info-value" id="city">-</div>
+            </div>
+            <div class="info-card">
+              <div class="info-label">Street Address</div>
+              <div class="info-value" id="street">-</div>
+            </div>
+            <div class="info-card">
+              <div class="info-label">Postal Code</div>
+              <div class="info-value" id="postal-code">-</div>
+            </div>
+            <div class="info-card">
+              <div class="info-label">Birthdate</div>
+              <div class="info-value" id="birthdate">-</div>
+            </div>
+            <div class="info-card">
+              <div class="info-label">ID Number</div>
+              <div class="info-value" id="id-number">-</div>
+            </div>
+            <div class="info-card">
+              <div class="info-label">Risk Level</div>
+              <div class="info-value" id="risk-level">-</div>
+            </div>
+          </div>
+        </div>
       </div>
+    </div>
+
+    <!-- Authentication Dialog Modal -->
+    <dialog id="dialog" style="
+      border: none;
+      border-radius: 15px;
+      padding: 0;
+      max-width: 90vw;
+      max-height: 90vh;
+      width: 600px;
+      height: 500px;
+      background: white;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    ">
+      <div style="
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        border-bottom: 1px solid #e9ecef;
+        background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+        color: white;
+        border-radius: 15px 15px 0 0;
+      ">
+        <h2 style="margin: 0; font-size: 1.5rem;">NatWest Authentication</h2>
+        <button onclick="document.getElementById('dialog').close()" style="
+          background: rgba(255,255,255,0.2);
+          border: 1px solid rgba(255,255,255,0.3);
+          color: white;
+          border-radius: 50%;
+          width: 32px;
+          height: 32px;
+          cursor: pointer;
+          font-size: 18px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        ">×</button>
+      </div>
+      
+      <div id="widget" style="
+        padding: 20px;
+        height: calc(100% - 80px);
+        overflow: auto;
+      "></div>
+    </dialog>
+
+    <!-- Token Debug Section -->
+    <div class="token-debug-section" style="margin-top: 40px; padding: 20px; border-top: 1px solid #e0e0e0;">
+      <button id="toggle-tokens" onclick="toggleTokenSection()" style="
+        background-color: #6c5ce7;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        margin-bottom: 15px;
+      ">Show Tokens</button>
+      
+      <div id="token-section" style="display: none;">
+        <h3 style="color: #6c5ce7; margin-bottom: 15px;">Authentication Tokens (Debug)</h3>
+        
+        <div style="margin-bottom: 20px;">
+          <h4 style="color: #333; margin-bottom: 10px;">Access Token:</h4>
+          <pre id="access-token-display" style="
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 5px;
+            padding: 15px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: #495057;
+            max-height: 200px;
+            overflow-y: auto;
+          ">Loading...</pre>
+        </div>
+        
+        <div>
+          <h4 style="color: #333; margin-bottom: 10px;">ID Token:</h4>
+          <pre id="id-token-display" style="
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 5px;
+            padding: 15px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: #495057;
+            max-height: 200px;
+            overflow-y: auto;
+          ">Loading...</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Script to handle user authentication display -->
+    <script>
+      // Check authentication status when page loads
+      window.addEventListener("load", function() {
+        // Check if we have authentication data
+        checkAuthStatus();
+      });
+
+      function checkAuthStatus() {
+        // Try to get access token from global variables or sessionStorage
+        let accessToken = null;
+        
+        if (typeof at !== 'undefined' && at) {
+          accessToken = at;
+        } else {
+          // Try sessionStorage
+          const storedAccessToken = sessionStorage.getItem('accessToken');
+          if (storedAccessToken) {
+            try {
+              accessToken = JSON.parse(atob(storedAccessToken.split('.')[1]));
+            } catch (e) {
+              console.error('Error decoding stored access token:', e);
+            }
+          }
+        }
+        
+        if (accessToken && accessToken.NatWestID) {
+          // Display user information from access token
+          displayUserInfo(accessToken.NatWestID);
+          displayTokens();
+          // Show logout button, hide login button
+          updateAuthButtons(true);
+        } else {
+          // No authentication data found
+          showNoAuthMessage();
+          // Show login button, hide logout button
+          updateAuthButtons(false);
+        }
+      }
+
+      function updateAuthButtons(isAuthenticated) {
+        const loginBtn = document.getElementById('login');
+        const logoutBtn = document.getElementById('logout');
+        
+        if (isAuthenticated) {
+          if (loginBtn) loginBtn.style.display = 'none';
+          if (logoutBtn) logoutBtn.style.display = 'block';
+        } else {
+          if (loginBtn) loginBtn.style.display = 'block';
+          if (logoutBtn) logoutBtn.style.display = 'none';
+        }
+      }
+
+      function displayUserInfo(natwestId) {
+        // Update profile section
+        const profileInitials = document.getElementById('profile-initials');
+        const userFullName = document.getElementById('user-full-name');
+        const userId = document.getElementById('user-id');
+        
+        if (profileInitials) {
+          const firstName = natwestId['First Name'] || '';
+          const lastName = natwestId['Last Name'] || '';
+          const initials = (firstName.charAt(0) + lastName.charAt(0)).toUpperCase();
+          profileInitials.textContent = initials || 'U';
+        }
+        
+        if (userFullName) {
+          const firstName = natwestId['First Name'] || '';
+          const lastName = natwestId['Last Name'] || '';
+          userFullName.textContent = `${firstName} ${lastName}`.trim() || 'User';
+        }
+        
+        if (userId) {
+          const userIdValue = natwestId['UserID'] || 'Unknown';
+          userId.textContent = `User ID: ${userIdValue}`;
+        }
+        
+        // Update NatWest ID information grid
+        updateInfoCard('first-name', natwestId['First Name']);
+        updateInfoCard('last-name', natwestId['Last Name']);
+        updateInfoCard('user-id-display', natwestId['UserID']);
+        updateInfoCard('issued-by', natwestId['Issued by']);
+        updateInfoCard('issued-date', formatDate(natwestId['Issued date']));
+        updateInfoCard('city', natwestId['City']);
+        updateInfoCard('street', natwestId['Street']);
+        updateInfoCard('postal-code', natwestId['Postal Code']);
+        updateInfoCard('birthdate', natwestId['Birthdate']);
+        updateInfoCard('id-number', natwestId['IDNumber']);
+        updateInfoCard('risk-level', natwestId['risk']);
+      }
+
+      function updateInfoCard(elementId, value) {
+        const element = document.getElementById(elementId);
+        if (element) {
+          if (value && value.trim() !== '') {
+            element.textContent = value;
+          } else {
+            element.textContent = 'Not provided';
+            element.style.color = '#b2bec3';
+            element.style.fontStyle = 'italic';
+          }
+        }
+      }
+
+      function formatDate(dateString) {
+        if (!dateString || dateString.trim() === '') {
+          return 'Not provided';
+        }
+        
+        try {
+          const date = new Date(dateString);
+          if (isNaN(date.getTime())) {
+            return dateString; // Return original if can't parse
+          }
+          return date.toLocaleDateString('en-GB', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+          });
+        } catch (e) {
+          return dateString; // Return original if error
+        }
+      }
+
+      function showNoAuthMessage() {
+        // Show message that user needs to authenticate
+        const userFullName = document.getElementById('user-full-name');
+        const userId = document.getElementById('user-id');
+        
+        if (userFullName) userFullName.textContent = 'Please Log In';
+        if (userId) userId.textContent = 'User ID: Not authenticated';
+        
+        // Hide or disable the NatWest ID section
+        const natwestSection = document.querySelector('.natwest-id-section');
+        if (natwestSection) {
+          natwestSection.style.opacity = '0.5';
+          natwestSection.style.pointerEvents = 'none';
+        }
+      }
+
+      function displayTokens() {
+        const tokenSection = document.getElementById('token-section');
+        const accessTokenDisplay = document.getElementById('access-token-display');
+        const idTokenDisplay = document.getElementById('id-token-display');
+        
+        if (!tokenSection || !accessTokenDisplay || !idTokenDisplay) return;
+        
+        // Get access token data
+        let accessToken = '';
+        let idToken = '';
+        
+        if (typeof at !== 'undefined' && at) {
+          accessToken = JSON.stringify(at, null, 2);
+        } else {
+          const storedAccessToken = sessionStorage.getItem('accessToken');
+          if (storedAccessToken) {
+            try {
+              const decoded = JSON.parse(atob(storedAccessToken.split('.')[1]));
+              accessToken = JSON.stringify(decoded, null, 2);
+            } catch (e) {
+              accessToken = storedAccessToken;
+            }
+          }
+        }
+        
+        if (typeof it !== 'undefined' && it) {
+          idToken = JSON.stringify(it, null, 2);
+        } else {
+          const storedIdToken = sessionStorage.getItem('idToken');
+          if (storedIdToken) {
+            try {
+              const decoded = JSON.parse(atob(storedIdToken.split('.')[1]));
+              idToken = JSON.stringify(decoded, null, 2);
+            } catch (e) {
+              idToken = storedIdToken;
+            }
+          }
+        }
+        
+        accessTokenDisplay.textContent = accessToken || 'No access token available';
+        idTokenDisplay.textContent = idToken || 'No ID token available';
+      }
+
+      function toggleTokenSection() {
+        const tokenSection = document.getElementById('token-section');
+        const toggleButton = document.getElementById('toggle-tokens');
+        
+        if (tokenSection.style.display === 'none' || tokenSection.style.display === '') {
+          tokenSection.style.display = 'block';
+          toggleButton.textContent = 'Hide Tokens';
+        } else {
+          tokenSection.style.display = 'none';
+          toggleButton.textContent = 'Show Tokens';
+        }
+      }
+    </script>
   </body>
 </html>

@@ -26,6 +26,8 @@ window.addEventListener("load", (event) => {
     }
   }
   
+  // Check authentication status on page load for all pages
+  checkAuthStatusOnLoad();
 });
 
 function openDialog(pol){
@@ -102,6 +104,21 @@ function loadDV(polId){
     at = decodeToken(response.access_token);
     it = decodeToken(response.id_token);
     st = response.sessionToken;
+    sessionActive = true;
+    
+    // Store authentication data in sessionStorage for persistence across pages
+    sessionStorage.setItem('accessToken', response.access_token);
+    sessionStorage.setItem('idToken', response.id_token);
+    sessionStorage.setItem('sessionToken', response.sessionToken);
+    sessionStorage.setItem('sessionActive', 'true');
+    
+    // Store decoded token data for easy access
+    sessionStorage.setItem('decodedAccessToken', JSON.stringify(at));
+    sessionStorage.setItem('decodedIdToken', JSON.stringify(it));
+    
+    console.log('Access Token Data:', at);
+    console.log('ID Token Data:', it);
+    
     //document.cookie = "f1TV=" + at.F1TVSub + ";";
     //handleUI(it.fname,it.sname);
     window.location.href = "./account.html";
@@ -125,18 +142,71 @@ function handleUI(fname,sname){
   document.getElementById('dialog').close();
 }
 
+// Add function to check authentication status on page load
+function checkAuthStatusOnLoad() {
+  // Check if we're on the account page and need to restore authentication
+  if (window.location.pathname.includes('account.html')) {
+    // Try to restore authentication data from sessionStorage
+    const storedDecodedAccessToken = sessionStorage.getItem('decodedAccessToken');
+    const storedDecodedIdToken = sessionStorage.getItem('decodedIdToken');
+    const storedSessionToken = sessionStorage.getItem('sessionToken');
+    
+    if (storedDecodedAccessToken && storedDecodedIdToken) {
+      // Restore global variables
+      try {
+        at = JSON.parse(storedDecodedAccessToken);
+        it = JSON.parse(storedDecodedIdToken);
+        st = storedSessionToken;
+        sessionActive = true;
+        
+        console.log('Authentication restored from sessionStorage:', { at, it, st });
+      } catch (error) {
+        console.error('Error restoring authentication data:', error);
+        sessionActive = false;
+      }
+    } else {
+      console.log('No stored authentication data found');
+      sessionActive = false;
+    }
+  }
+}
+
+// Enhanced logout function to clear sessionStorage
 function logout(){
+  // Clear sessionStorage
+  sessionStorage.removeItem('accessToken');
+  sessionStorage.removeItem('idToken');
+  sessionStorage.removeItem('sessionToken');
+  sessionStorage.removeItem('sessionActive');
+  sessionStorage.removeItem('decodedAccessToken');
+  sessionStorage.removeItem('decodedIdToken');
   
-  document.getElementById('register').style.display = "initial";
-  document.getElementById('login').style.display = "initial";
-  document.getElementById('logout').style.display = "none";
-  document.getElementById('name').style.display = "none";
+  // Clear global variables
+  at = undefined;
+  it = undefined;
+  st = undefined;
+  sessionActive = false;
+  
+  // Handle UI based on current page
+  if (window.location.pathname.includes('account.html')) {
+    // On account page, redirect to login page
+    window.location.href = "./index.html";
+  } else {
+    // On other pages, update UI elements
+    const registerBtn = document.getElementById('register');
+    const loginBtn = document.getElementById('login');
+    const logoutBtn = document.getElementById('logout');
+    const nameDiv = document.getElementById('name');
+    
+    if (registerBtn) registerBtn.style.display = "initial";
+    if (loginBtn) loginBtn.style.display = "initial";
+    if (logoutBtn) logoutBtn.style.display = "none";
+    if (nameDiv) nameDiv.style.display = "none";
+  }
   
   let callback = encodeURI(window.location.href);
-  
   let uri = "https://auth.pingone.eu/fd4cecf9-f6b6-45da-a0c3-2f8af9874182/as/signoff?post_logout_redirect_uri="+callback;
   window.location.href = uri;
-
 }
 
 function decodeToken(token){

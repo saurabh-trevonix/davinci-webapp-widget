@@ -17,3 +17,4 @@ Thumbs.db
 # Exclude temporary files
 *.tmp
 *.temp
+.vercel

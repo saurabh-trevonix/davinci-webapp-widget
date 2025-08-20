@@ -44,9 +44,13 @@ function loadDV(polId){
 
   const oidcConfigUrl = "https://auth.pingone.eu/fd4cecf9-f6b6-45da-a0c3-2f8af9874182/as/.well-known/openid-configuration";
 
+  console.log("OIDC Config URL:", oidcConfigUrl);
+
   /*** Build the DaVinci Token URL. ***/
   const skGetTokenUrl =
     tokenURL + "/v1/company/" + companyId + "/sdktoken";
+
+  console.log("Token URL:", skGetTokenUrl);
 
   //*** Add the API Key from your DaVinci Application. ***/
   var headers = new Headers();
@@ -65,10 +69,15 @@ function loadDV(polId){
   ])
     .then(([tokenResponse, oidcResponse]) => Promise.all([tokenResponse.json(), oidcResponse.json()]))
     .then(([tokenData, oidcConfig]) => {
+      console.log("OIDC Response:", oidcConfig);
+      console.log("Authorization Endpoint:", oidcConfig.authorization_endpoint);
+      console.log("Modified API Root:", oidcConfig.authorization_endpoint.replace('/authorize', ''));
+      console.log("Base Domain for API Root:", "https://auth.pingone.eu");
+      
       var props = {
         config: {
           method: "runFlow",
-          apiRoot: oidcConfig.authorization_endpoint.replace('/authorize', ''),
+          apiRoot: "https://auth.pingone.eu",
           accessToken: tokenData.access_token,
           companyId: companyId,
           policyId: policyId,
@@ -80,7 +89,7 @@ function loadDV(polId){
         onCloseModal,
       };
       /*** Invoke DaVinci Widget ****/
-      console.log(props);
+      console.log("Final DaVinci Props:", props);
       davinci.skRenderScreen(
         document.getElementById("widget"),
         props

@@ -34,12 +34,12 @@ function openDialog(pol){
 }
 
 function loadDV(polId){
-  const tokenURL = "https://orchestrate-api.pingone.com";
-  const flowURL = "https://auth.pingone.com/";
-  const companyId = "6fa1cf7d-3008-4baa-a835-b8ced178e984";
+  const tokenURL = "https://orchestrate-api.pingone.eu";
+  const flowURL = "https://auth.pingone.eu/";
+  const companyId = "fd4cecf9-f6b6-45da-a0c3-2f8af9874182";
   const policyId = polId;
   const apiKey =
-    "22cc48febb484a293fccd2ec62c40ca5ee0644fd3e0efc1cdd5aae6b63be19f0e5b511e5d6971e9d34c82927d77d1e9b4632658a0a853c820413d186160cc08a144e6ffd830d5e1bed12c4f8f867244e1eaad0a46fe73fe141021e72682f678370bd3a1b9f8547b1639e2032a3376c1953b4c71fe400a961add767ed3cef7d03";
+    "1d7ceddc35cd195e6abe59ae58c8f5184994caae4499fe77a0f422a775a9d175e4c4e79653024a92b339091b7a5dcb48e5d2a39d802fd77a4649ec4150d99678145211a384ff69de17852ca77adb921e883275af0d194fb722b7cc8e6e63ce4e052d8c1931420d9c01205f789427489df527af412409a75251de3e34585203e7";
 
   let flowInputVariables = {};
 
@@ -121,7 +121,7 @@ function logout(){
   
   let callback = encodeURI(window.location.href);
   
-  let uri = "https://auth.pingone.com/6fa1cf7d-3008-4baa-a835-b8ced178e984/as/signoff?post_logout_redirect_uri="+callback;
+  let uri = "https://auth.pingone.eu/6fa1cf7d-3008-4baa-a835-b8ced178e984/as/signoff?post_logout_redirect_uri="+callback;
   window.location.href = uri;
 
 }
